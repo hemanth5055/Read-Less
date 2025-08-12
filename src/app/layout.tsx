@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat, Play } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
+import { SignedIn } from "@clerk/clerk-react";
 
 const mont = Montserrat({
   weight: ["600", "500"],
@@ -23,8 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${mont.variable} ${play.variable}   antialiased p-6`}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${mont.variable} ${play.variable}   antialiased p-6`}>
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

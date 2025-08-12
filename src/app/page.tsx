@@ -1,8 +1,19 @@
+import { getUserByClerkId, syncUser } from "@/actions/user";
 import Note from "@/Components/Note";
-import { ArrowUp, LogIn, TrashIcon } from "lucide-react";
-import React from "react";
+import { SignOutButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
+import { LogOut } from "lucide-react";
+import { redirect } from "next/navigation";
+import React, { use } from "react";
 
-const page = () => {
+const page = async () => {
+  const { userId } = await auth();
+  if (!userId) redirect("/signin");
+  // const syncuser = await syncUser();
+  // console.log(syncUser);
+  const data = await getUserByClerkId(userId);
+  const user = data.user;
+  if (!user) return;
   return (
     <div className="w-full">
       {/* top-hero */}
@@ -20,13 +31,15 @@ const page = () => {
           <div className="flex gap-4 justify-end py-4">
             {/* credits */}
             <div className="h-[40px] w-[40px] flex justify-center items-center">
-              <h3 className="font-play text-[22px]">09</h3>
+              <h3 className="font-play text-[22px]">{user.credits}</h3>
             </div>
 
             {/* logout */}
-            <div className="h-[40px] w-[40px] flex justify-center items-center cursor-pointer">
-              <LogIn></LogIn>
-            </div>
+            <SignOutButton redirectUrl="/signin">
+              <div className="h-[40px] w-[40px] flex justify-center items-center cursor-pointer">
+                <LogOut></LogOut>
+              </div>
+            </SignOutButton>
           </div>
         </div>
       </div>
@@ -38,7 +51,7 @@ const page = () => {
       </div>
       {/* notes */}
       <div className="w-full flex flex-col px-2 gap-4">
-        <h2 className="tracking-tight text-[18px]">Mr.John's Notes</h2>
+        <h2 className="tracking-tight text-[18px]">{user.name}'s Notes</h2>
         <div className="w-full flex flex-wrap  gap-3">
           <Note></Note>
           <Note></Note>
