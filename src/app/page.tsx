@@ -1,10 +1,12 @@
 import { getUserByClerkId, syncUser } from "@/actions/user";
 import Note from "@/Components/Note";
+import Upload from "@/Components/Upload";
 import { SignOutButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { LogOut } from "lucide-react";
 import { redirect } from "next/navigation";
-import React, { use } from "react";
+import React, { use, useContext } from "react";
+import Summarize from "@/Components/Summarize";
 
 const page = async () => {
   const { userId } = await auth();
@@ -14,6 +16,7 @@ const page = async () => {
   const data = await getUserByClerkId(userId);
   const user = data.user;
   if (!user) return;
+  
   return (
     <div className="w-full">
       {/* top-hero */}
@@ -44,10 +47,9 @@ const page = async () => {
         </div>
       </div>
       {/* upload-area */}
-      <div className="w-full my-10 px-2 flex">
-        <div className="px-10 py-3 bg-[#ff9f38] rounded-full tracking-tight cursor-pointer dark:text-black text-white">
-          Upload
-        </div>
+      <div className="w-full my-10 px-2 flex gap-4">
+        <Upload></Upload>
+        <Summarize></Summarize>
       </div>
       {/* notes */}
       <div className="w-full flex flex-col px-2 gap-4">
