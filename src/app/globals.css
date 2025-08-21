@@ -1,5 +1,6 @@
 @import "tailwindcss";
-
+@import "uploadthing/tw/v4";
+@source "../node_modules/@uploadthing/react/dist";
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -24,3 +25,33 @@ body {
   color: var(--foreground);
   font-family: var(--font-mont);
 }
+
+
+.upload input {
+  display: none; 
+}
+
+.upload > *[data-ut-element="allowed-content"] {
+  display: none; 
+}
+
+.upload {
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgb(235, 152, 44);
+  width: 250px;
+  height: 50px;
+  border-radius: 25px;
+  cursor: pointer;
+  color: white; 
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.upload > *[data-ut-element="button"][data-state="uploading"] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+

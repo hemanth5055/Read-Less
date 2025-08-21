@@ -49,7 +49,7 @@ const page = async () => {
       {/* upload-area */}
       <div className="w-full my-10 px-2 flex gap-4">
         <Upload></Upload>
-        <Summarize></Summarize>
+        {/* <Summarize></Summarize> */}
       </div>
       {/* notes */}
       <div className="w-full flex flex-col px-2 gap-4">
