@@ -1,10 +1,14 @@
 "use client";
-import { UrlContext } from "@/context/Urlcontext";
 import { UploadButton } from "@/utils/uploadthing";
-import React, { useContext } from "react";
+import axios from "axios";
+import React from "react";
 
 const Upload = () => {
-  const { url } = useContext(UrlContext);
+  // const { url } = useContext(UrlContext);
+  const handlePostUpload = async (url: string) => {
+    const response = await axios.post("/api/make-summary", { url });
+    console.log(response);
+  };
 
   return (
     <div className="flex justify-center items-center w-full">
@@ -20,7 +24,8 @@ const Upload = () => {
           allowedContent: () => "", // hide "No file chosen"
         }}
         onClientUploadComplete={(res) => {
-          console.log("Files: ", res);
+          handlePostUpload(res[0].ufsUrl);
+          console.log(res[0].ufsUrl);
           alert("Upload Completed");
         }}
         onUploadError={(error: Error) => {
