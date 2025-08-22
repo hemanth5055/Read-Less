@@ -26,17 +26,16 @@ body {
   font-family: var(--font-mont);
 }
 
-
 .upload input {
-  display: none; 
+  display: none;
 }
 
 .upload > *[data-ut-element="allowed-content"] {
-  display: none; 
+  display: none;
 }
 
 .upload {
-  display: flex; 
+  display: flex;
   align-items: center;
   justify-content: center;
 
@@ -45,7 +44,7 @@ body {
   height: 50px;
   border-radius: 25px;
   cursor: pointer;
-  color: white; 
+  color: white;
   font-weight: 500;
   font-size: 16px;
 }
@@ -54,4 +53,3 @@ body {
   cursor: not-allowed;
   opacity: 0.6;
 }
-
