@@ -1,15 +1,15 @@
+"use client";
 import { ArrowUp, LogIn, TrashIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-const Note = () => {
+const Note = ({ data }: any) => {
+  const router = useRouter();
   return (
     <div className="w-[400px] flex flex-col p-4 dark:bg-[#121212] bg-[#ebeaea] gap-4 rounded-[20px] shrink-0">
-      <h2 className="tracking-tight text-[18px]">
-        How to Crack System Design Interviews - Drive With Me
-      </h2>
-      <p className="dark:text-[#BCBCBC] text-[#454545] text-[14px]">
-        The process involves learning fundamental components (like reverse
-        proxies, queues, databases)
+      <h2 className="tracking-tight text-[18px]">{data.name}</h2>
+      <p className="dark:text-[#BCBCBC] text-[#454545] text-[14px] h-full line-clamp-4">
+        {data.shortDesc}
       </p>
       {/* options */}
       <div className="flex w-full justify-between items-center">
@@ -18,7 +18,12 @@ const Note = () => {
           <div className="cursor-pointer">
             <TrashIcon size={20}></TrashIcon>
           </div>
-          <div className="cursor-pointer">
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              router.push(`note/${data.id}`);
+            }}
+          >
             <ArrowUp size={20} className="rotate-45"></ArrowUp>
           </div>
         </div>

@@ -6,3 +6,15 @@ export async function getSummaryData(id: string) {
   });
   return result;
 }
+
+export async function getSummariesById(userId: string) {
+  const result = await prisma.summary.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return result;
+}

@@ -1,12 +1,12 @@
 import { getUserByClerkId, syncUser } from "@/actions/user";
-import Note from "@/Components/Note";
 import Upload from "@/Components/Upload";
 import { SignOutButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { LogOut } from "lucide-react";
 import { redirect } from "next/navigation";
-import React, { use, useContext } from "react";
+import React, { Suspense, use, useContext } from "react";
 import Summarize from "@/Components/Summarize";
+import NoteWrapper from "@/Components/NoteWrapper";
 
 const page = async () => {
   const { userId } = await auth();
@@ -16,7 +16,7 @@ const page = async () => {
   const data = await getUserByClerkId(userId);
   const user = data.user;
   if (!user) return;
-  
+
   return (
     <div className="w-full">
       {/* top-hero */}
@@ -54,11 +54,9 @@ const page = async () => {
       {/* notes */}
       <div className="w-full flex flex-col px-2 gap-4">
         <h2 className="tracking-tight text-[18px]">{user.name}'s Notes</h2>
-        <div className="w-full flex flex-wrap  gap-3">
-          <Note></Note>
-          <Note></Note>
-          <Note></Note>
-        </div>
+        <Suspense fallback={<h1>Loading Summaries</h1>}>
+          <NoteWrapper userId={user.id}></NoteWrapper>
+        </Suspense>
       </div>
     </div>
   );
