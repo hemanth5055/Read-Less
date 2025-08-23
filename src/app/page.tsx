@@ -2,10 +2,9 @@ import { getUserByClerkId, syncUser } from "@/actions/user";
 import Upload from "@/Components/Upload";
 import { SignOutButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
-import { LogOut } from "lucide-react";
+import { LoaderCircleIcon, LogOut } from "lucide-react";
 import { redirect } from "next/navigation";
 import React, { Suspense, use, useContext } from "react";
-import Summarize from "@/Components/Summarize";
 import NoteWrapper from "@/Components/NoteWrapper";
 
 const page = async () => {
@@ -22,19 +21,22 @@ const page = async () => {
       {/* top-hero */}
       <div className="w-full flex ">
         {/* name-desc */}
-        <div className="w-[60%] flex flex-col">
-          <h1 className="text-[50px] tracking-tighter">ReadLess 💫</h1>
-          <p className="text-[16px] text-gray-500 px-1 tracking-tight">
-            Effortlessly upload PDFs.<br></br>Receive concise summaries
-            instantly.
-          </p>
+        <div className="w-[60%] flex flex-col ">
+          <h1 className="text-[50px] tracking-tighter font-funnel max-sm:hidden">
+            ReadLess
+          </h1>
         </div>
         {/* credits-logout */}
-        <div className="w-[40%] flex justify-end">
-          <div className="flex gap-4 justify-end py-4">
+        <div className="w-[40%] flex justify-end items-center">
+          <div className="flex gap-4 justify-end items-center">
+            {/* upload  */}
+            <Upload></Upload>
+
             {/* credits */}
             <div className="h-[40px] w-[40px] flex justify-center items-center">
-              <h3 className="font-play text-[22px]">{user.credits}</h3>
+              <h3 className="font-play text-[22px] font-funnel">
+                {user.credits}
+              </h3>
             </div>
 
             {/* logout */}
@@ -46,15 +48,14 @@ const page = async () => {
           </div>
         </div>
       </div>
-      {/* upload-area */}
-      <div className="w-full my-10 px-2 flex gap-4">
-        <Upload></Upload>
-        {/* <Summarize></Summarize> */}
-      </div>
+      {/* <h2 className="tracking-tight text-[18px] py-3 px-2 italic">Your Notes</h2> */}
       {/* notes */}
-      <div className="w-full flex flex-col px-2 gap-4">
-        <h2 className="tracking-tight text-[18px]">{user.name}'s Notes</h2>
-        <Suspense fallback={<h1>Loading Summaries</h1>}>
+      <div className="w-full flex flex-col gap-4 py-4">
+        <Suspense
+          fallback={
+            <LoaderCircleIcon className="w-5 h-5 animate-spin text-black dark:text-white" />
+          }
+        >
           <NoteWrapper userId={user.id}></NoteWrapper>
         </Suspense>
       </div>

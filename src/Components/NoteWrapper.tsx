@@ -10,9 +10,10 @@ const NoteWrapper = async (props: NoteWrapperProps) => {
   const summaries = await getSummariesById(userId);
   // console.log(summaries);
   return (
-    <div className="w-full flex flex-wrap  gap-3">
+    <div className="w-full flex flex-wrap justify-center  gap-3">
       {summaries.map((item) => (
-        <Note data={item}></Note>
+        <Note data={item} key={item.id}></Note>
+        
       ))}
     </div>
   );

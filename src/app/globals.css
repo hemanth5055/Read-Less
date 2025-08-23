@@ -10,7 +10,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-mont: var(--font-mont);
-  --font-play: var(--font-play);
+  --font-funnel: var(--font-funnel);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -38,11 +38,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background-color: rgb(235, 152, 44);
-  width: 250px;
-  height: 50px;
-  border-radius: 25px;
+  background-color: rgb(44, 127, 235);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8068de, #4b99d9);
   cursor: pointer;
   color: white;
   font-weight: 500;
@@ -51,5 +51,4 @@ body {
 
 .upload > *[data-ut-element="button"][data-state="uploading"] {
   cursor: not-allowed;
-  opacity: 0.6;
 }

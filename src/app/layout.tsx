@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Play } from "next/font/google";
+import { Montserrat, Funnel_Display } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { UrlContextProvider } from "@/context/Urlcontext";
@@ -9,13 +9,13 @@ const mont = Montserrat({
   variable: "--font-mont",
   subsets: ["latin"],
 });
-const play = Play({
+const funnel = Funnel_Display({
   weight: ["400"],
-  variable: "--font-play",
+  variable: "--font-funnel",
   subsets: ["latin"],
 });
 export const metadata: Metadata = {
-  title: "Summarize PDF",
+  title: "ReadLess",
   description: "Get a concise summary of pdf in seconds.",
 };
 
@@ -29,7 +29,7 @@ export default function RootLayout({
       <UrlContextProvider>
         <html lang="en">
           <body
-            className={`${mont.variable} ${play.variable}   antialiased p-6`}
+            className={`${mont.variable} ${funnel.variable}   antialiased p-6`}
           >
             {children}
           </body>
