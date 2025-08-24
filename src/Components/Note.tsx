@@ -5,7 +5,13 @@ import { TrashIcon } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const Note = ({ data, setNotes }: any) => {
+const Note = ({
+  data,
+  setNotes,
+}: {
+  data: Note;
+  setNotes: React.Dispatch<React.SetStateAction<Note[]>>;
+}) => {
   const router = useRouter();
   const handleDelete = async () => {
     try {
@@ -28,14 +34,14 @@ const Note = ({ data, setNotes }: any) => {
   return (
     <div className=" w-[65%]  max-sm:w-[100%] flex flex-col p-4  max-sm:p-1 px-0 gap-2  shrink-0 ">
       <h2
-        className="tracking-tight text-[25px] max-sm:text-[20px] font-funnel cursor-pointer  group hover:bg-gradient-to-br hover:from-[#8068de] hover:to-[#4b99d9] hover:bg-clip-text hover:text-transparent"
+        className="tracking-tight text-[30px] max-sm:text-[25px] font-funnel cursor-pointer max-sm:leading-[30px]  group hover:bg-gradient-to-br hover:from-[#8068de] hover:to-[#4b99d9] hover:bg-clip-text hover:text-transparent"
         onClick={() => {
           router.push(`note/${data.id}`);
         }}
       >
         {data.name}
       </h2>
-      <p className="dark:text-[#BCBCBC] text-[#454545]  max-sm:text-[12px] text-[14px] h-full line-clamp-4">
+      <p className="dark:text-[#BCBCBC] text-[#454545]  max-sm:text-[12px] text-[15px] h-full line-clamp-4">
         {data.shortDesc}
       </p>
       {/* options */}

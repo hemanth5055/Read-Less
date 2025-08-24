@@ -22,6 +22,8 @@ model User {
   credits   Int       @default(10)
   createdAt DateTime  @default(now())
   summaries Summary[]
+
+  @@index([clerkId])
 }
 
 model Summary {

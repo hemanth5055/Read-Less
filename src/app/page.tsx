@@ -30,7 +30,7 @@ const page = async () => {
         <div className="w-[40%] flex justify-end items-center">
           <div className="flex gap-4 justify-end items-center">
             {/* upload  */}
-            <Upload></Upload>
+            {user.credits <= 0 ? <p className="font-funnel">Out of Credits !</p> : <Upload></Upload>}
 
             {/* credits */}
             <div className="h-[40px] w-[40px] flex justify-center items-center">
@@ -50,7 +50,7 @@ const page = async () => {
       </div>
       {/* <h2 className="tracking-tight text-[18px] py-3 px-2 italic">Your Notes</h2> */}
       {/* notes */}
-      <div className="w-full flex flex-col gap-4 py-4">
+      <div className="w-full flex flex-col gap-4 py-4 max-sm:py-8">
         <Suspense
           fallback={
             <LoaderCircleIcon className="w-5 h-5 animate-spin text-black dark:text-white" />

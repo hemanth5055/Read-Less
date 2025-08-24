@@ -50,14 +50,14 @@ const Upload = () => {
                   Upload
                 </div>
               );
-            return null; // nothing instead of "loading..."
+            return null;
           },
-          allowedContent: () => null, // hides "No file chosen"
+          allowedContent: () => null,
         }}
         onClientUploadComplete={(res) => {
           handlePostUpload(res[0].ufsUrl);
         }}
-        onUploadError={(error: Error) => {
+        onUploadError={(_error: Error) => {
           toast.error(`Unable to upload file`);
         }}
       />

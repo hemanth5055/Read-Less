@@ -4,7 +4,7 @@ import React from "react";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import { useRouter } from "next/navigation";
 import { SignOutButton } from "@clerk/nextjs";
-const Summary = ({ data }: { data: any }) => {
+const Summary = ({ data }: { data: Note }) => {
   const router = useRouter();
   return (
     <div className="w-full flex flex-col">
@@ -18,23 +18,23 @@ const Summary = ({ data }: { data: any }) => {
               router.push("/");
             }}
           >
-            <Home size={18}></Home>
+            <Home size={20}></Home>
           </div>
           {/* logout */}
           <div className="h-[40px] w-[40px] flex justify-center items-center cursor-pointer">
             <SignOutButton redirectUrl="/signin">
-              <LogOut size={18}></LogOut>
+              <LogOut size={20}></LogOut>
             </SignOutButton>
           </div>
         </div>
       </div>
 
       {/* heading-options */}
-      <div className="w-full flex flex-col gap-2">
-        <h1 className="text-[30px] tracking-tight font-funnel">{data.name}</h1>
+      <div className="w-full flex flex-col gap-2p max-sm:pt-2">
+        <h1 className="text-[35px] tracking-tight font-funnel max-sm:leading-[35px]">{data.name}</h1>
         <div className="flex gap-1">
           <div className="h-[40px] w-[40px] flex justify-center items-center cursor-pointer">
-            <Download size={18}></Download>
+            <Download size={20}></Download>
           </div>
           <div className="h-[40px] w-[40px] flex justify-center items-center cursor-pointer">
             {/* <Trash size={18}></Trash> */}
@@ -50,6 +50,7 @@ const Summary = ({ data }: { data: any }) => {
             padding: 16,
             fontFamily: "Montserrat",
             background: "transparent",
+            fontSize:"17px"
           }}
         />
       </div>
