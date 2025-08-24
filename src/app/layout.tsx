@@ -3,6 +3,7 @@ import { Montserrat, Funnel_Display } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { UrlContextProvider } from "@/context/Urlcontext";
+import { Toaster } from "react-hot-toast";
 
 const mont = Montserrat({
   weight: ["600", "500"],
@@ -32,6 +33,7 @@ export default function RootLayout({
             className={`${mont.variable} ${funnel.variable}   antialiased p-5`}
           >
             {children}
+            <Toaster position="bottom-left" reverseOrder={false} />
           </body>
         </html>
       </UrlContextProvider>

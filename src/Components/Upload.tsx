@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoaderCircleIcon, UploadIcon } from "lucide-react";
 import LoadingOverlay from "./Loading";
+import toast from "react-hot-toast";
 
 const Upload = () => {
   const [loading, setLoading] = useState(false);
@@ -16,11 +17,13 @@ const Upload = () => {
       const response = await axios.post("/api/make-summary", { url });
       if (response.data && response.data.success) {
         router.push(`/note/${response.data.noteId}`);
+        toast.success("Summarized Successfully");
       } else {
-        console.error("Summary creation failed:", response.data.message);
+        toast.error("error while summarizing");
+        // console.error("Summary creation failed:", response.data.message);
       }
     } catch {
-      console.log("error while summarizing");
+      toast.error("error while summarizing");
     } finally {
       setLoading(false);
     }
@@ -55,7 +58,7 @@ const Upload = () => {
           handlePostUpload(res[0].ufsUrl);
         }}
         onUploadError={(error: Error) => {
-          alert(`ERROR! ${error.message}`);
+          toast.error(`Unable to upload file`);
         }}
       />
     </div>

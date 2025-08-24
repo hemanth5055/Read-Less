@@ -17,7 +17,7 @@ const Page = async () => {
         <h1 className="text-[50px] tracking-tighter font-funnel">
           ReadLess
         </h1>
-        <p className="font-medium px-1 text-gray-500">Keep your PDS concise and organized.</p>
+        <p className="font-medium px-1 text-gray-500 dark:text-gray-400">Keep your PDS concise and organized.</p>
       </div>
       <div className="w-full flex justify-center pt-[200px]">
         <SignInButton mode="modal">

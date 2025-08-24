@@ -18,3 +18,9 @@ export async function getSummariesById(userId: string) {
   });
   return result;
 }
+
+export async function deleteSummaryById(id: string) {
+  return prisma.summary.delete({
+    where: { id },
+  });
+}

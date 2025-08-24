@@ -37,7 +37,7 @@ const Summary = ({ data }: { data: any }) => {
             <Download size={18}></Download>
           </div>
           <div className="h-[40px] w-[40px] flex justify-center items-center cursor-pointer">
-            <Trash size={18}></Trash>
+            {/* <Trash size={18}></Trash> */}
           </div>
         </div>
       </div>

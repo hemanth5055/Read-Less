@@ -1,12 +1,32 @@
 "use client";
-import { ArrowUp, LogIn, TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { TrashIcon } from "lucide-react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const Note = ({ data }: any) => {
+const Note = ({ data, setNotes }: any) => {
   const router = useRouter();
+  const handleDelete = async () => {
+    try {
+      const result = await axios.post("api/delete-summary", { id: data.id });
+      console.log(result);
+      if (result?.data?.success) {
+        // Update local state
+        setNotes((prev: any) =>
+          prev.filter((item: any) => item.id !== data.id)
+        );
+        toast.success("Deleted Successfully");
+      } else {
+        toast.error("Failed to delete");
+      }
+    } catch (err) {
+      // console.error(err);
+      toast.error("Server error");
+    }
+  };
   return (
-    <div className=" w-[65%]  max-sm:w-[100%] flex flex-col p-4  max-sm:p-1 px-0 gap-2  shrink-0 " >
+    <div className=" w-[65%]  max-sm:w-[100%] flex flex-col p-4  max-sm:p-1 px-0 gap-2  shrink-0 ">
       <h2
         className="tracking-tight text-[25px] max-sm:text-[20px] font-funnel cursor-pointer  group hover:bg-gradient-to-br hover:from-[#8068de] hover:to-[#4b99d9] hover:bg-clip-text hover:text-transparent"
         onClick={() => {
@@ -24,8 +44,8 @@ const Note = ({ data }: any) => {
           {new Date(data.createdAt).toDateString()}
         </h2>
         <div className="flex gap-4">
-          <div className="cursor-pointer">
-            <TrashIcon size={20}></TrashIcon>
+          <div className="cursor-pointer" onClick={handleDelete}>
+            <TrashIcon size={20} className="hover:text-red-400"></TrashIcon>
           </div>
         </div>
       </div>
