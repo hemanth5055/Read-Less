@@ -29,7 +29,7 @@ export default function RootLayout({
       <UrlContextProvider>
         <html lang="en">
           <body
-            className={`${mont.variable} ${funnel.variable}   antialiased p-6`}
+            className={`${mont.variable} ${funnel.variable}   antialiased p-5`}
           >
             {children}
           </body>

@@ -6,10 +6,9 @@ import React from "react";
 const Note = ({ data }: any) => {
   const router = useRouter();
   return (
-    <div className="w-[65%]  max-sm:w-[100%] flex flex-col p-4  max-sm:p-1 px-0 gap-2  shrink-0">
+    <div className=" w-[65%]  max-sm:w-[100%] flex flex-col p-4  max-sm:p-1 px-0 gap-2  shrink-0 " >
       <h2
-        className="tracking-tight text-[25px] max-sm:text-[20px] font-funnel cursor-pointer  group hover:bg-gradient-to-br hover:from-[#8068de] hover:to-[#4b99d9] 
-             hover:bg-clip-text hover:text-transparent"
+        className="tracking-tight text-[25px] max-sm:text-[20px] font-funnel cursor-pointer  group hover:bg-gradient-to-br hover:from-[#8068de] hover:to-[#4b99d9] hover:bg-clip-text hover:text-transparent"
         onClick={() => {
           router.push(`note/${data.id}`);
         }}

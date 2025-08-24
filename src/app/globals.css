@@ -39,9 +39,9 @@ body {
   align-items: center;
   justify-content: center;
   background-color: rgb(44, 127, 235);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  padding-inline: 15px;
+  padding-block: 8px;
+  border-radius: 20px;
   background: linear-gradient(135deg, #8068de, #4b99d9);
   cursor: pointer;
   color: white;

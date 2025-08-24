@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoaderCircleIcon, UploadIcon } from "lucide-react";
+import LoadingOverlay from "./Loading";
 
 const Upload = () => {
   const [loading, setLoading] = useState(false);
@@ -27,11 +28,7 @@ const Upload = () => {
 
   return (
     <div className="flex justify-center items-center w-full">
-      {loading && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black/40 z-50">
-          <LoaderCircleIcon className="w-10 h-10 animate-spin text-white" />
-        </div>
-      )}
+      {loading && <LoadingOverlay></LoadingOverlay>}
 
       <UploadButton
         endpoint="pdfUploader"
@@ -43,7 +40,13 @@ const Upload = () => {
                 <LoaderCircleIcon className="w-5 h-5 animate-spin text-white" />
               );
             }
-            if (ready) return <UploadIcon size={15} />;
+            if (ready)
+              return (
+                <div className="flex items-center gap-2">
+                  <UploadIcon size={15} />
+                  Upload
+                </div>
+              );
             return null; // nothing instead of "loading..."
           },
           allowedContent: () => null, // hides "No file chosen"
