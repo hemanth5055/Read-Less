@@ -8,6 +8,7 @@ export const metadata = {
 };
 const Page = async () => {
   const { userId } = await auth();
+  // console.log(userId);
   if (userId) redirect("/");
   return <Signin></Signin>;
 };
