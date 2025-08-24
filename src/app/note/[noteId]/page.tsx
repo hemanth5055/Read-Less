@@ -8,7 +8,7 @@ const Page = async ({ params }: { params: Promise<{ noteId: string }> }) => {
   const summary = await getSummaryData(noteId);
   if (!summary) return notFound();
 
-  console.log(summary);
+  // console.log(summary);
 
   return (
     <div>

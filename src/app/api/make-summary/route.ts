@@ -3,7 +3,9 @@ import { NextResponse } from "next/server";
 import { generateSummary } from "./ai";
 import { prisma } from "@/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { UTApi } from "uploadthing/server";
 
+const utapi = new UTApi();
 export async function POST(req: Request) {
   try {
     const { userId } = await auth();
@@ -14,10 +16,11 @@ export async function POST(req: Request) {
       );
     }
     // Parse request
-    const { url } = await req.json();
-    if (!url) {
+    const { url, fileKey } = await req.json();
+    console.log(url,fileKey)
+    if (!url || !fileKey) {
       return NextResponse.json(
-        { message: "No URL provided", success: false },
+        { message: "No URL or fileKey provided", success: false },
         { status: 400 }
       );
     }
@@ -68,7 +71,13 @@ export async function POST(req: Request) {
         where: { clerkId: userId },
         data: { credits: { decrement: 1 } },
       });
-
+      if (fileKey) {
+        try {
+          await utapi.deleteFiles([fileKey]);
+        } catch (fileDeleteError) {
+          console.warn("Failed to delete file from storage");
+        }
+      }
       const summary = await tx.summary.create({
         data: {
           name: aiSummary.name,
@@ -81,12 +90,12 @@ export async function POST(req: Request) {
 
       return summary;
     });
-
-    return NextResponse.json({
+    const response = NextResponse.json({
       message: "Summarized successfully",
       success: true,
       noteId: result.id,
     });
+    return response;
   } catch (err: any) {
     console.error("POST /api error:", err.message);
     return NextResponse.json(

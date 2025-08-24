@@ -6,6 +6,8 @@ import { LoaderCircleIcon, LogOut } from "lucide-react";
 import { redirect } from "next/navigation";
 import React, { Suspense, use, useContext } from "react";
 import NoteWrapper from "@/Components/NoteWrapper";
+import Star from "@/Components/Star";
+import BackToTop from "@/Components/BackToTop";
 
 const page = async () => {
   const { userId } = await auth();
@@ -30,7 +32,11 @@ const page = async () => {
         <div className="w-[40%] flex justify-end items-center">
           <div className="flex gap-4 justify-end items-center">
             {/* upload  */}
-            {user.credits <= 0 ? <p className="font-funnel">Out of Credits !</p> : <Upload></Upload>}
+            {user.credits <= 0 ? (
+              <p className="font-funnel">Out of Credits !</p>
+            ) : (
+              <Upload></Upload>
+            )}
 
             {/* credits */}
             <div className="h-[40px] w-[40px] flex justify-center items-center">
@@ -59,6 +65,8 @@ const page = async () => {
           <NoteWrapper userId={user.id}></NoteWrapper>
         </Suspense>
       </div>
+      <Star></Star>
+      <BackToTop></BackToTop>
     </div>
   );
 };

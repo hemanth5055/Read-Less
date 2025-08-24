@@ -11,10 +11,13 @@ const Upload = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handlePostUpload = async (url: string) => {
+  const handlePostUpload = async (url: string, key: string) => {
     setLoading(true);
     try {
-      const response = await axios.post("/api/make-summary", { url });
+      const response = await axios.post("/api/make-summary", {
+        url,
+        fileKey: key,
+      });
       if (response.data && response.data.success) {
         router.push(`/note/${response.data.noteId}`);
         toast.success("Summarized Successfully");
@@ -55,7 +58,8 @@ const Upload = () => {
           allowedContent: () => null,
         }}
         onClientUploadComplete={(res) => {
-          handlePostUpload(res[0].ufsUrl);
+          console.log(res);
+          handlePostUpload(res[0].serverData.file, res[0].serverData.fileKey);
         }}
         onUploadError={(_error: Error) => {
           toast.error(`Unable to upload file`);
