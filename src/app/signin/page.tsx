@@ -15,7 +15,7 @@ const Page = async () => {
         </p>
       </div>
       <div className="w-full flex justify-center pt-[200px]">
-        <SignInButton mode="modal">
+        <SignInButton mode="modal" forceRedirectUrl="/">
           <button className="px-6 py-2 rounded-full bg-gradient-to-br from-[#8068de] to-[#4b99d9] text-white cursor-pointer font-medium">
             Sign In
           </button>

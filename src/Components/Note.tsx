@@ -34,7 +34,7 @@ const Note = ({
   return (
     <div className=" w-[65%]  max-sm:w-[100%] flex flex-col p-4  max-sm:p-1 px-0 gap-2  shrink-0 ">
       <h2
-        className="tracking-tight text-[30px] max-sm:text-[25px] font-funnel cursor-pointer max-sm:leading-[30px]  group hover:bg-gradient-to-br hover:from-[#8068de] hover:to-[#4b99d9] hover:bg-clip-text hover:text-transparent"
+        className="tracking-tight text-[30px] max-sm:text-[25px] font-funnel cursor-pointer max-sm:leading-[30px]  group hover:bg-gradient-to-br hover:from-[#8068de] hover:to-[#4b99d9] hover:bg-clip-text hover:text-transparent select-none"
         onClick={() => {
           router.push(`note/${data.id}`);
         }}
