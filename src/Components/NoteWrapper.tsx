@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SummaryWrapper from "./SummaryWrapper";
+import { LoaderCircleIcon } from "lucide-react";
 
 interface NoteWrapperProps {
   userId: string;
@@ -22,7 +23,7 @@ const NoteWrapper = ({ userId }: NoteWrapperProps) => {
 
     const fetchSummaries = async () => {
       try {
-        const res = await axios.post("/api/get-summaries", { id:userId });
+        const res = await axios.post("/api/get-summaries", { id: userId });
         setSummaries(res.data.summaries || []);
       } catch (err) {
         setError("Failed to fetch summaries");
@@ -34,7 +35,10 @@ const NoteWrapper = ({ userId }: NoteWrapperProps) => {
     fetchSummaries();
   }, [userId]);
 
-  if (loading) return <h2>Loading summaries...</h2>;
+  if (loading)
+    return (
+      <LoaderCircleIcon className="w-6 h-6 animate-spin text-black dark:text-white" />
+    );
   if (error) return <h2>{error}</h2>;
 
   return <SummaryWrapper summaries={summaries} />;
