@@ -1,41 +1,74 @@
-import { getUserByClerkId, syncUser } from "@/actions/user";
+"use client";
+
 import Upload from "@/Components/Upload";
-import { SignOutButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
-import { LoaderCircleIcon, LogOut } from "lucide-react";
-import { redirect } from "next/navigation";
-import React, { Suspense, use, useContext } from "react";
+import { SignOutButton, useAuth } from "@clerk/nextjs";
+import { LogOut, LoaderCircleIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import NoteWrapper from "@/Components/NoteWrapper";
 import Star from "@/Components/Star";
 import BackToTop from "@/Components/BackToTop";
+import axios from "axios";
 
-const page = async () => {
-  const { userId } = await auth();
-  if (!userId) redirect("/signin");
-  // const syncuser = await syncUser();
-  // console.log(syncUser);
-  const data = await getUserByClerkId(userId);
-  const user = data.user;
-  if (!user) return;
+export default function Page() {
+  const { userId, isLoaded } = useAuth();
+  const router = useRouter();
+  const [user, setUser] = useState<{ id: string; credits: number } | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // redirect if not signed in
+  useEffect(() => {
+    if (isLoaded && !userId) {
+      router.push("/signin");
+    }
+  }, [isLoaded, userId, router]);
+
+  // fetch user from your API route
+  useEffect(() => {
+    if (!userId) return;
+    const fetchUser = async () => {
+      try {
+        const res = await axios.post(`/api/get-user`, { id: userId });
+        if (res && res.data) {
+          setUser(res.data.user);
+        }
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, [userId]);
+
+  if (loading) {
+    return (
+      <div className="w-full flex justify-center items-center h-[80vh]">
+        <LoaderCircleIcon className="w-6 h-6 animate-spin text-black dark:text-white" />
+      </div>
+    );
+  }
+
+  if (!user) return null;
 
   return (
     <div className="w-full">
       {/* top-hero */}
       <div className="w-full flex ">
-        {/* name-desc */}
         <div className="w-[60%] flex flex-col ">
           <h1 className="text-[50px] tracking-tighter font-funnel max-sm:hidden">
             ReadLess
           </h1>
         </div>
+
         {/* credits-logout */}
         <div className="w-[40%] flex justify-end items-center">
           <div className="flex gap-4 justify-end items-center">
-            {/* upload  */}
+            {/* upload */}
             {user.credits <= 0 ? (
               <p className="font-funnel">Out of Credits !</p>
             ) : (
-              <Upload></Upload>
+              <Upload />
             )}
 
             {/* credits */}
@@ -48,27 +81,20 @@ const page = async () => {
             {/* logout */}
             <SignOutButton redirectUrl="/signin">
               <div className="h-[40px] w-[40px] flex justify-center items-center cursor-pointer">
-                <LogOut></LogOut>
+                <LogOut />
               </div>
             </SignOutButton>
           </div>
         </div>
       </div>
-      {/* <h2 className="tracking-tight text-[18px] py-3 px-2 italic">Your Notes</h2> */}
+
       {/* notes */}
       <div className="w-full flex flex-col gap-4 py-4 max-sm:py-8">
-        <Suspense
-          fallback={
-            <LoaderCircleIcon className="w-5 h-5 animate-spin text-black dark:text-white" />
-          }
-        >
-          <NoteWrapper userId={user.id}></NoteWrapper>
-        </Suspense>
+        <NoteWrapper userId={user.id} />
       </div>
-      <Star></Star>
-      <BackToTop></BackToTop>
+
+      <Star />
+      <BackToTop />
     </div>
   );
-};
-
-export default page;
+}

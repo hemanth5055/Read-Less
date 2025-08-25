@@ -1,15 +1,14 @@
+"use client";
 import Signin from "@/Components/Signin";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import React from "react";
-export const metadata = {
-  title: "Sign In - ReadLess",
-  description: "Sign in to ReadLess to keep your PDS concise and organized.",
-};
-const Page = async () => {
-  const { userId } = await auth();
-  // console.log(userId);
-  if (userId) redirect("/");
+
+const Page = () => {
+  const { userId } = useAuth();
+  console.log("signin", userId);
+  const router = useRouter();
+  if (userId) router.push("/");
   return <Signin></Signin>;
 };
 
